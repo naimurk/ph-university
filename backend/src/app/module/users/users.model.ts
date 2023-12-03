@@ -1,8 +1,7 @@
 import { Schema, model } from "mongoose";
 import { TUser } from "./users.interface";
-
-import { Timestamp } from "mongodb";
-
+import config from "../../config";
+import bcrypt from "bcrypt"
 
 
 export const userSchema = new Schema<TUser>({
@@ -31,5 +30,21 @@ export const userSchema = new Schema<TUser>({
     
 
 },{timestamps: true})
+
+
+userSchema.pre("save", async function (next){
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const user = this;
+    user.password = await bcrypt.hash(user.password , Number(config.BCRYPT_SALT_ROUNDS));
+    next();
+ 
+   })
+ 
+   userSchema.post("save", async function (doc , next){
+     doc.set("password", undefined);
+    next()
+   })
+ 
+ 
 
  export const User = model <TUser>("User", userSchema)
