@@ -25,6 +25,7 @@ export type TLocalGuardian = {
 export type TStudent = {
   id: string;
   user: Types.ObjectId;
+  academicSemester: Types.ObjectId;
   password: string;
   name: TUserName;
   gender: 'male' | 'female' | 'other';

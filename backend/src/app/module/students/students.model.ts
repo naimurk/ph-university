@@ -66,6 +66,8 @@ const userNameSchema = new Schema<TUserName>({
       type: String,
       required: [true, 'Address is required'],
     },
+
+
   });
   
   const studentSchema = new Schema<TStudent>(
@@ -80,6 +82,14 @@ const userNameSchema = new Schema<TUserName>({
         required: [true, 'User id is required'],
         unique: true,
         ref: 'User',
+      },
+
+      academicSemester: {
+        type: Schema.Types.ObjectId,
+        required: [true, 'Academic semester is required'],
+        unique: true,
+        ref: "AcademicSemester"
+
       },
       name: {
         type: userNameSchema,
